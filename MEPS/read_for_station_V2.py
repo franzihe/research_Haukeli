@@ -27,9 +27,12 @@ import fcts_read_stat as rs
 
 thredds      = 'http://thredds.met.no/thredds/dodsC/meps25epsarchive'
 
-stn_name     = 'Haukeliseter'
-stn_lat      = 59.8
-stn_lon      = 7.2
+#stn_name     = 'Haukeliseter'
+#stn_lat      = 59.8
+#stn_lon      = 7.2
+stn_name     = 'Stavanger'
+stn_lat      = 58.87
+stn_lon      = 5.67
 
 #month        = 12
 #day          = 24
@@ -58,9 +61,9 @@ year         = 2016
 
 # Nov 2016
 month = 11
-#t = np.arange(11,19)
-#t = np.append(t,[28,29])
-t = [28]
+t = np.arange(11,19)
+t = np.append(t,[28,29])
+
 
 
 # Dez 2016
