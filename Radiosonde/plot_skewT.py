@@ -93,7 +93,7 @@ def plot_skewT(T, Td, z, p, u, v, text):
 
 
 
-def plot_skewT_EM(T, Td, z, p, u, v, hour, text, sfig, filename):
+def plot_skewT_EM(T, Td, z, p, u, v, hour, text):
     fig = plt.figure(1, figsize=(16, 20))#, edgecolor = 'k')
     gs = GridSpec(1,12)
 # sounding
@@ -174,11 +174,5 @@ def plot_skewT_EM(T, Td, z, p, u, v, hour, text, sfig, filename):
             color =blue, fontsize=30,
             bbox={'facecolor':'white','alpha':.8, 'pad':10})
 
-# savefig
-    if sfig == 1:
-        plt.savefig(filename,orientation = 'portrait', papertype = 'a4')#, dpi=300,bbox_inches=0)
-    else:
-	    plt.show()
-    plt.close()    
 
 
