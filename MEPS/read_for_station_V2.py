@@ -52,7 +52,7 @@ elif em0 == 1:
 # In[ ]:
 
 
-year         = 2016
+#year         = 2016
 
 ### Upslope
 # Oct 2016
@@ -60,9 +60,9 @@ year         = 2016
 #t     = [28]
 
 # Nov 2016
-month = 11
-t = np.arange(11,19)
-t = np.append(t,[28,29])
+#month = 11
+#t = np.arange(11,19)
+#t = np.append(t,[28,29])
 
 
 
@@ -70,15 +70,15 @@ t = np.append(t,[28,29])
 #month = 12
 #t = np.arange(21,28)
 
-#year         = 2017
+year         = 2017
 # Jan 2017
 #month = '01'
 #t = np.arange(2,14)
 #t = np.append(t,[28,29])
 
 # Feb 2017
-#month = '02'
-#t = np.arange(1,5)
+month = '02'
+t = np.arange(1,5)
 
 
 
