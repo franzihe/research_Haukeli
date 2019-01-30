@@ -96,10 +96,10 @@ def plt_variable(lead_time_sfc,wd_MEPS,WD,time_EM_mean, model_var_mean,var,xdays
         ax.axhline(0,color=vert_col, linewidth= 3)
         # yaxis
         ax.set_ylabel('Air Temperature [$^\circ$C]', fontsize=label_fs)
-        ax.set_ylim(-9,6)
-        T = np.arange(-9,7)
+        ax.set_ylim(-15,6)
+        T = np.arange(-15,7)
         ax.set_yticks(T)
-        ax.set_yticklabels([-9, '' , '', -6, '' , '', -3, '' , '', 0, 
+        ax.set_yticklabels([-15,'','',-12,'','',-9, '' , '', -6, '' , '', -3, '' , '', 0, 
                             '' , '', 3, '' , '', 6], fontsize=tick_fs)
     elif var == 'SP':
         # yaxis
