@@ -70,15 +70,16 @@ elif em0 == 1:
 #month = 12
 #t = np.arange(21,28)
 
-year         = 2017
+#year         = 2017
 # Jan 2017
 #month = '01'
 #t = np.arange(2,14)
 #t = np.append(t,[28,29])
 
 # Feb 2017
-month = '02'
-t = np.arange(1,5)
+#month = '02'
+#t = np.arange(1,5)
+m = ['11', '12', '01', '02', '03']
 
 
 
@@ -87,7 +88,7 @@ t = np.arange(1,5)
 
 
 main_dir       = '../../Data/MEPS'
-dirnc          = '%s/%s/%s%s/%s_%s' %(main_dir,stn_name,year,month,layers,forecasttime)
+
 
 
 # In[ ]:
@@ -344,8 +345,19 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 
 
 #%%time
-
-for day in t:
+for month in m:
+  if month == '11':
+    t = np.arange(8,31)
+  if month == '12' or month == '01' or month == '03':
+    t = np.arange(1,32)
+  if month == '02':
+    t = np.arange(1,29)
+  if month == '11' or month == '12':
+    year = '2016'
+  if month == '01' or month == '02' or month == '03':
+    year = '2017'
+  dirnc          = '%s/%s/%s%s/%s_%s' %(main_dir,stn_name,year,month,layers,forecasttime)
+  for day in t:
     if day < 10:
         day = '0%s' %(day)
         
