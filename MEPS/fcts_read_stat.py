@@ -94,10 +94,10 @@ def get_thickness(pressure, temperature):
 # Dynamics Book, Eq. below Eq. 3.6
     temp_mean = []
     for i in range(0, temperature.shape[1]-1):
-        numT = simps(y=temperature[:,i:(i+2)], x=np.log(pressure[:,i:(i+2)]), 
-                     dx = np.log(pressure[:,i:(i+2)]),even='last')
-        denomT = simps(y=np.ones(temperature[:,i:(i+2)].shape), x = np.log(pressure[:,i:(i+2)]), 
-                       dx = np.log(pressure[:,i:(i+2)]),even='last')
+        numT = simps(y=temperature[:temperature.shape[0],i:(i+2)], x=np.log(pressure[:temperature.shape[0],i:(i+2)]), 
+                     dx = np.log(pressure[:temperature.shape[0],i:(i+2)]),even='last')
+        denomT = simps(y=np.ones(temperature[:temperature.shape[0],i:(i+2)].shape), x = np.log(pressure[:temperature.shape[0],i:(i+2)]), 
+                       dx = np.log(pressure[:temperature.shape[0],i:(i+2)]),even='last')
         t_mean = numT/denomT
         temp_mean.append(t_mean)
 
@@ -112,8 +112,8 @@ def get_thickness(pressure, temperature):
     for i in range(0, temp_mean.shape[1]):
    # if (i+1) == pres.shape[1]:
     #    continue
-        p1 = pressure[:,i]
-        p2 = pressure[:,(i+1)]   
+        p1 = pressure[:temperature.shape[0],i]
+        p2 = pressure[:temperature.shape[0],(i+1)]   
         dz = (Rd * temp_mean[:,i])/g * np.log((p1/p2))    # thickness in [m]
         dgeop = (Rd * temp_mean[:,i])* np.log((p1/p2))    # thickness in [J/kg]
         thickness.append(dz)

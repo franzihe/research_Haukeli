@@ -27,12 +27,12 @@ import fcts_read_stat as rs
 
 thredds      = 'http://thredds.met.no/thredds/dodsC/meps25epsarchive'
 
-#stn_name     = 'Haukeliseter'
-#stn_lat      = 59.8
-#stn_lon      = 7.2
-stn_name     = 'Stavanger'
-stn_lat      = 58.87
-stn_lon      = 5.67
+stn_name     = 'Haukeliseter'
+stn_lat      = 59.8
+stn_lon      = 7.2
+#stn_name     = 'Stavanger'
+#stn_lat      = 58.87
+#stn_lon      = 5.67
 
 #month        = 12
 #day          = 24
@@ -79,7 +79,8 @@ elif em0 == 1:
 # Feb 2017
 #month = '02'
 #t = np.arange(1,5)
-m = ['11', '12', '01', '02', '03']
+#m = ['11', '12', '01', '02', '03']
+m = ['12', '01', '02', '03']
 
 
 
@@ -108,8 +109,14 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
     
     fn = dict()
     for i in range(0,np.shape(met_files)[0]):
-        fn[i] = netCDF4.Dataset('%s/%s/%s/%s/%s%s%s%sT%sZ.nc' %(thredds,year,month,day,met_files[i],year,month,day,forecasttime),
+ #       fn[i] = netCDF4.Dataset('%s/%s/%s/%s/%s%s%s%sT%sZ.nc' %(thredds,year,month,day,met_files[i],year,month,day,forecasttime),
+  #                               'r')
+        try:
+            fn[i] = netCDF4.Dataset('%s/%s/%s/%s/%s%s%s%sT%sZ.nc' %(thredds,year,month,day,met_files[i],year,month,day,forecasttime),
                                  'r')
+        except OSError:
+            print('no file found: %s/%s/%s/%s/%s%s%s%sT%sZ.nc' %(thredds,year,month,day,met_files[i],year,month,day,forecasttime))
+            return
 
 ## Latitudes
 ## [y = 949][x = 739]
@@ -167,8 +174,8 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 
 ### 2) Connect model levels and surface values for temperature
 ### Temperature
-        temperature_ml = np.concatenate((air_temperature_ml[:,:,ens_memb],
-                                        air_temperature_0m[:,:,ens_memb]),axis=1)
+        temperature_ml = np.concatenate((air_temperature_ml[:air_temperature_ml.shape[0],:,ens_memb],
+                                        air_temperature_0m[:air_temperature_ml.shape[0],:,ens_memb]),axis=1)
 
     
 
@@ -331,14 +338,15 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 #       rf_ml = rs.get_netCDF_variable(f,'rainfall_amount_ml',rainfall_amount_ml,dim)
 #       gf_ml = rs.get_netCDF_variable(f,'graupelfall_amount_ml',graupelfall_amount_ml,dim)
 
-    pres_ml = rs.get_netCDF_variable(f,'pressure_ml',pressure_in_modellev,dim)
-    dz_ml = rs.get_netCDF_variable(f,'layer_thickness',thickness_m,dim)
-    dgeop_ml = rs.get_netCDF_variable(f,'geop_layer_thickness',thickness_phi,dim)
+    pres_ml = rs.get_netCDF_variable(f,'pressure_ml',pressure_in_modellev[:time_arr.shape[0],:],dim)
+    dz_ml = rs.get_netCDF_variable(f,'layer_thickness',thickness_m[:time_arr.shape[0],:],dim)
+    dgeop_ml = rs.get_netCDF_variable(f,'geop_layer_thickness',thickness_phi[:time_arr.shape[0],:],dim)
 
     f.close()
 
     for i in range(0,np.shape(met_files)[0]):
         fn[i].close()
+    print('file written: %s/%s%s%s_%s.nc' %(dirnc,year,month,day,forecasttime))
 
 
 # In[ ]:
@@ -350,6 +358,10 @@ for month in m:
     t = np.arange(8,31)
   if month == '12' or month == '01' or month == '03':
     t = np.arange(1,32)
+#  if month == '12':
+ #   t = np.arange(19,32)
+  #if month == '01' or month == '03':
+   # t = np.arange(1,32)
   if month == '02':
     t = np.arange(1,29)
   if month == '11' or month == '12':
@@ -366,7 +378,7 @@ for month in m:
     ### direction where files should be saved
     cF.createFolder('%s' %(dirnc))
     read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc)
-    print('file written: %s/%s%s%s_%s.nc' %(dirnc,year,month,day,forecasttime))
+ #   print('file written: %s/%s%s%s_%s.nc' %(dirnc,year,month,day,forecasttime))
     
     print("--- %s seconds ---" % round(time.time() - start_time, 2))
 
