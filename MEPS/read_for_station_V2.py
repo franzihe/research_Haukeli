@@ -80,7 +80,7 @@ elif em0 == 1:
 #month = '02'
 #t = np.arange(1,5)
 #m = ['11', '12', '01', '02', '03']
-m = ['12', '01', '02', '03']
+m = ['01', '02', '03']
 
 
 
@@ -356,8 +356,10 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 for month in m:
   if month == '11':
     t = np.arange(8,31)
-  if month == '12' or month == '01' or month == '03':
+  if month == '12' or month == '03':
     t = np.arange(1,32)
+  if month == '01':
+    t = np.arange(21,32)
 #  if month == '12':
  #   t = np.arange(19,32)
   #if month == '01' or month == '03':
