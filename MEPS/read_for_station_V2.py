@@ -37,8 +37,8 @@ stn_lon      = 7.2
 #month        = 12
 #day          = 24
 forecasttime = '00'
-all_em       = 0      # 1==yes, 0==no
-em0          = 1
+all_em       = 1      # 1==yes, 0==no
+em0          = 0
 
 if all_em == 1:
 #    met_file = 'meps_subset_2_5km_'
@@ -80,7 +80,8 @@ elif em0 == 1:
 #month = '02'
 #t = np.arange(1,5)
 #m = ['11', '12', '01', '02', '03']
-m = ['01', '02', '03']
+#m = ['01', '02', '03']
+m = ['12', '01', '02', '03']
 
 
 
@@ -141,12 +142,23 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 
 ### variables to calculate pressure
 #p0 = fn.variables['p0']    ## p0: p0
-    ap = fn[k].variables['ap']    ## ap: ap
-    b = fn[k].variables['b']      ## b: b
+    try:
+      ap = fn[k].variables['ap']    ## ap: ap
+    except KeyError:
+      ap = fn[k].variables['ap0']
+    try:
+      b = fn[k].variables['b']      ## b: b
+    except KeyError:
+      b = fn[k].variables['b0']
 
     surface_air_pressure = fn[0].variables['surface_air_pressure']
     air_temperature_0m   = fn[0].variables['air_temperature_0m']
-    air_temperature_ml   = fn[k].variables['air_temperature_ml']
+    try:
+      air_temperature_ml   = fn[k].variables['air_temperature_ml']
+    except KeyError:
+      print('no air_temperature_ml found --> no file saved!!! %s/%s%s%s_%s.nc' %(dirnc,year,month,day,forecasttime))
+      return
+      
 
 ### mask arrays
     surface_air_pressure, dtype_sap  = rs.mask_array(surface_air_pressure, #ens_memb, 
@@ -356,10 +368,10 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 for month in m:
   if month == '11':
     t = np.arange(8,31)
-  if month == '12' or month == '03':
+  if month == '12': #or month == '03':
+    t = np.arange(16,32)
+  if month == '01' or month == '03':
     t = np.arange(1,32)
-  if month == '01':
-    t = np.arange(21,32)
 #  if month == '12':
  #   t = np.arange(19,32)
   #if month == '01' or month == '03':
