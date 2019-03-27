@@ -34,7 +34,8 @@ stn_lon      = 20.41
 #day          = 24
 forecasttime = '00'
 #m = ['09', '10', '11', '12', '01', '02', '03','04']
-m = ['10', '11', '12', '01', '02', '03','04']
+#m = ['10', '11', 
+m = ['12', '01', '02', '03','04']
 
 # In[ ]:
 
@@ -314,8 +315,10 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
 #%%time
 for month in m:
     if month == '10':#or
-        t = np.arange(12,32)
-    if month == '12' or month == '01' or month == '03':
+        t = np.arange(28,32)
+    if month == '12':
+        t = np.arange(25,32)
+    if month == '01' or month == '03':
         t = np.arange(1,32)
     if month == '09' or month == '11' or month == '04':
         t = np.arange(1,31)
