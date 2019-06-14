@@ -37,8 +37,8 @@ stn_lon      = 7.2
 #month        = 12
 #day          = 24
 forecasttime = '00'
-all_em       = 1      # 1==yes, 0==no
-em0          = 0
+all_em       = 0      # 1==yes, 0==no
+em0          = 1
 
 if all_em == 1:
 #    met_file = 'meps_subset_2_5km_'
@@ -262,6 +262,7 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
         atmosphere_cloud_condensed_water_content_ml= rs.get_value_at_station(fn[k],'atmosphere_cloud_condensed_water_content_ml',y,x)
         pressure_departure = rs.get_value_at_station(fn[k],'pressure_departure',y,x)
         atmosphere_cloud_ice_content_ml = rs.get_value_at_station(fn[k],'atmosphere_cloud_ice_content_ml',y,x)
+        upward_air_velocity_ml = rs.get_value_at_station(fn[k],'upward_air_velocity_ml',y,x)
     
 ## values in 2nd file
 #       graupelfall_amount_ml = rs.get_value_at_station(fn[2],'graupelfall_amount_ml',y,x)
@@ -346,6 +347,7 @@ def read_for_station(thredds,year,month,day,forecasttime,stn_lat,stn_lon,dirnc):
                                      atmosphere_cloud_condensed_water_content_ml,dim)
         cic_ml = rs.get_netCDF_variable(f,'atmosphere_cloud_ice_content_ml',atmosphere_cloud_ice_content_ml,dim)
         pres_dep_ml = rs.get_netCDF_variable(f,'pressure_departure',pressure_departure,dim)
+        up_air_velo_ml = rs.get_netCDF_variable(f,'upward_air_velocity_ml', upward_air_velocity_ml, dim)
 #       sf_ml = rs.get_netCDF_variable(f,'snowfall_amount_ml',snowfall_amount_ml,dim)
 #       rf_ml = rs.get_netCDF_variable(f,'rainfall_amount_ml',rainfall_amount_ml,dim)
 #       gf_ml = rs.get_netCDF_variable(f,'graupelfall_amount_ml',graupelfall_amount_ml,dim)
